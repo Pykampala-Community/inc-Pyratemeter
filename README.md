@@ -60,7 +60,7 @@ Explanation:
                       429:Too many requests
                     (Throttling by Pyratemeter)
 
-Cloud microservices have become widely popular and rate limiting is usually imlemented within a 
+Cloud microservices have become widely popular and rate limiting is usually implemented within a 
 component called API gateway. An API gateway in this case is a fully managed service that supports rate 
 limiting, SSL termination, authentication, IP whitelisting, serving static content etc. For this reason
 knowing that API gateways support rate limiting, it's a design decision that the Pyratemeter is designed 
@@ -116,15 +116,15 @@ store that offers two commands:`INCR and EXPIRE`
    - `EXPIRE`: It sets a timeout for the counter. If the timeout expires, the counter is automatically
                deleted
 
-`illustration for the high-level architecture`
+illustration for the high-level architecture
 ----------------------------------------------
 
-                           ---------------------------
-                           |                         |-------------------------->API SERVERS
- CLIENT------------------->|  Pyratemeter middleware |
-                           |                         |<-------------------------->IN-MEMORY CACHE
-                           |                         |
-                           ---------------------------
+                  ---------------------------
+                  |                         |----------->API SERVERS
+ CLIENT---------->|  Pyratemeter middleware |
+                  |                         |<---------->IN-MEMORY CACHE
+                  |                         |
+                  ---------------------------
 
 Let us see how this works:
  
