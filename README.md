@@ -126,6 +126,8 @@ such as (Redis) and checks if the limit reached or not. If the limit is reached,
 otherwise the request is sent to API servers. Meanwhile the system increments the counter and save it
 back to in-memory cache 
 
+``illustration``
+
                          |
                          |----------->API SERVERS
         CLIENT---------->|                 
