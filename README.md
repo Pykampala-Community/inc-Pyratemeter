@@ -1,4 +1,4 @@
-`Pyratemeter` is a Python based rate limiter tool used in a network system to control the rate of 
+``Pyratemeter` is a Python based rate limiter tool used in a network system to control the rate of 
 traffic sent by a client or a service preferably over an http network. Therefore, Pyratemeter
 is used to limit the number of client requests allowed to be sent over a specified period in
 a way that if the API request count exceeds the threshold defined by Pyratemeter, all the
@@ -117,23 +117,23 @@ store that offers two commands:`INCR and EXPIRE`
                deleted
 
 illustration for the high-level architecture
-----------------------------------------------
+--------------------------------------------
 
-                                   ---------------
-                                   |              |----------->API SERVERS
-                  CLIENT---------->|  Pyratemeter |
-                                   |  middelware  |<---------->IN-MEMORY CACHE
-                                   |              |
-                                    ---------------
+First, the client sends a request to Pyratemeter middleware
 
-How this works
---------------
- - First, the client sends a request to Pyratemeter middleware
+Pyratemeter middleware then fetches the counter from the coressponding bucket in the in-memory cache
+such as (Redis) and checks if the limit reached or not. If the limit is reached, the request is rejected
+otherwise the request is sent to API servers. Meanwhile the system increments the counter and save it
+back to in-memory cache 
 
- - Pyratemeter middleware then fetches the counter from the coressponding bucket in the in-memory cache
-   such as (Redis) and checks if the limit reached or not. If the limit is reached, the request is rejected
-   otherwise the request is sent to API servers. Meanwhile the system increments the counter and save it
-   back to in-memory cache
+                         |
+                         |----------->API SERVERS
+        CLIENT---------->|                 
+                         |<---------->IN-MEMORY CACHE
+                         |         
+                 Pyratemeter middlware       
+
+
 
 Exceeding rate limit and rate limit headers
 -------------------------------------------
