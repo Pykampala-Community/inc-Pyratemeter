@@ -119,15 +119,15 @@ store that offers two commands:`INCR and EXPIRE`
 illustration for the high-level architecture
 ----------------------------------------------
 
-                  ---------------------------
-                  |                         |----------->API SERVERS
- CLIENT---------->|  Pyratemeter middleware |
-                  |                         |<---------->IN-MEMORY CACHE
-                  |                         |
-                  ---------------------------
+                                   ---------------
+                                   |              |----------->API SERVERS
+                  CLIENT---------->|  Pyratemeter |
+                                   |  middelware  |<---------->IN-MEMORY CACHE
+                                   |              |
+                                    ---------------
 
-Let us see how this works:
- 
+How this works
+--------------
  - First, the client sends a request to Pyratemeter middleware
 
  - Pyratemeter middleware then fetches the counter from the coressponding bucket in the in-memory cache
