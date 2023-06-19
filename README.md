@@ -1,4 +1,4 @@
-``Pyratemeter` is a Python based rate limiter tool used in a network system to control the rate of 
+``Pyratemeter`` is a Python based rate limiter tool used in a network system to control the rate of 
 traffic sent by a client or a service preferably over an http network. Therefore, Pyratemeter
 is used to limit the number of client requests allowed to be sent over a specified period in
 a way that if the API request count exceeds the threshold defined by Pyratemeter, all the
@@ -24,7 +24,7 @@ Low-level design for Pyratemeter
 Considering a client-server communication, intuitively we can implement rate limiting using Pyratemeter
 at either the client side or server side however, generally speaking client side is an unreliable place
 to enforce rate limiting because client  requests can easily be forged by malicious actors and greatly 
-we don't really have control over client implementation.So placing our Pyratemeter at the server-side is quite okay however it's realy not ideal. Forexample:
+we don't really have control over client implementation. So placing our Pyratemeter at the server-side is quite okay however it's realy not ideal. Forexample:
 
                                              ______________________________
      CLIENT -------------------------------> |                Pyratemeter |
@@ -32,7 +32,7 @@ we don't really have control over client implementation.So placing our Pyratemet
                                              |                            |
                                               _____________________________
 
-Therefore, Pyratemeter being a stand alone tool, it's not a good idea to place it at the API servers. So instead of achitecting the Pyratemeter to be used on the server-side, we create kinder of a middleware
+Therefore, Pyratemeter being a stand alone tool, it's not a good idea to place it at the API servers. So instead of architecting the Pyratemeter to be used on the server-side, we create kinder of a middleware
 which throttles requests to server APIs as illustrated below.
 
                                       |
@@ -53,9 +53,9 @@ Explanation:
                                      
                                            Pyratemeter
                                                |
-                    -----req-1---------------->|
-            CLIENT  -----req-2---------------->|-------------------------> API SERVERS
-                    -----req-3 throttled------>|------------------------->
+                    -----req-1---------------->|-------------------------> API SERVERS
+            CLIENT  -----req-2---------------->|------------------------->
+                    -----req-3 throttled------>|
                     <--------------------------|
                       429:Too many requests
                     (Throttling by Pyratemeter)
@@ -140,11 +140,11 @@ back to in-memory cache
 Exceeding rate limit and rate limit headers
 -------------------------------------------
 In case a request is rate limited, APIs return an HTTP response code 429(too many request)to the client.
-Depending on the use-case, we enqueu the rate-limited requests to be processed later. For example, if some
+Depending on the use-case, we enqueue the rate-limited requests to be processed later. For example, if some
 requests are rate-limited due to system overload, the Pyratemeter keeps those requests to be processed later.
 
 How the client knows whether it is being throttled and the number of allowed remaining requests before
-being throttled will depends on the HTTP response headers. The Pyratemeter returns the following 
+being throttled will depend on the HTTP response headers. The Pyratemeter returns the following 
 HTTP response headers to clients.
   
   1. X-Ratelimit-Remaining: The remaining number of allowed requests within the time window.
@@ -153,8 +153,7 @@ HTTP response headers to clients.
 
   3. X-Ratelimit-Retry-After: The number of seconds to wait until you can make a request again.
 
-So, when a user has sent too many requests, a 429 too many requests error and X-Ratelimit-Retry-After header
-are returned to the client.
+So, when a user has sent too many requests, a `429 too many requests error` and `X-Ratelimit-Retry-After header` are returned to the client.
 
 Capability to work in distributed environments.
 ------------------------------------------------
@@ -172,7 +171,7 @@ threads, we address two issues.
      two strategies are used ie `Lua script` and `sorted sets data structure`
     
   2. Synchronization issue
-     Synchronization is another issue to consider in a hihly distributed system. To support millions of 
+     Synchronization is another issue to consider in a highly distributed system. To support millions of 
      users there must be a mechanism to handle traffic from more than one client (multiple clients)
 
 Performance optimization
@@ -191,4 +190,4 @@ Gathering analytics is a key feature Pyratemeter adopts to check whether
 
 ------------------------------------------------------------------------------------------------------------ 
 
-## Thanks For Reading Throuh, Happy Hacking !
+## Thanks For Reading Through, Happy Hacking !
